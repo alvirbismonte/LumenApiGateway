@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Services\UserService;
 use App\Traits\ApiResponser;
 use App\User;
 use Illuminate\Http\Request;
@@ -14,11 +15,17 @@ class UserController extends Controller
     /**
      * Create a new controller instance.
      *
+     */
+    public $userService;
+
+    /**
+     * Create a new controller instance.
+     *
      * @return void
      */
-    public function __construct()
+    public function __construct(UserService $userService)
     {
-        //
+        $this->userService = $userService;
     }
 
     /**
@@ -118,5 +125,15 @@ class UserController extends Controller
     {
 
         return $this->validResponse($request->user());
+    }
+
+    /**
+     * Generate Token
+     * @return Illuminate\Http\Response
+     */
+    public function generateAccessToken()
+    {
+
+        return $this->successResponse($this->userService->oauthToken());
     }
 }

@@ -39,6 +39,7 @@ class BookController extends Controller
      */
     public function index()
     {
+        phpinfo();
         return $this->successResponse($this->bookService->obtainBooks());
     }
 
